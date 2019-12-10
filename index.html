@@ -1,0 +1,75 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1, maximum-scale=1, user-scalable=no"
+    />
+    <title>Dviračių takai</title>
+    <style>
+      html,
+      body,
+      #viewDiv {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+        background-color: #5098d7;
+        color: white;
+      }
+      .container {
+        margin: 0px 0px 50px 0px;
+      }
+      .header {
+        text-align: center;
+        padding: 10px 0px 0px 0px;
+      }
+    </style>
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/4.13/esri/css/main.css"
+    />
+    <script src="https://js.arcgis.com/4.13/"></script>
+    <script>
+      require([
+        "esri/Map",
+        "esri/views/MapView",
+        "esri/layers/FeatureLayer",
+        "esri/widgets/Legend",
+        "esri/widgets/Expand"
+      ], function(Map, MapView, FeatureLayer, Legend, Expand) {
+        var map = new Map({
+          basemap: "topo-vector"
+        });
+        var view = new MapView({
+          container: "viewDiv",
+          map: map,
+          center: [25.2797, 54.6872],
+          zoom: 10
+        });
+        var trailheadsLayer = new FeatureLayer({
+          url:
+            "https://services1.arcgis.com/vVI5TNykiYD9EhM5/arcgis/rest/services/Dvira%C4%8Di%C5%B3_tak%C5%B3_planai_iki_2023_m/FeatureServer",
+          title: "Dviračių takų planai iki 2023 m."
+        });
+        map.add(trailheadsLayer);
+        var legend = new Expand({
+          content: new Legend({
+            view: view,
+            style: "classic"
+          }),
+          view: view,
+          expanded: true
+        });
+        view.ui.add(legend, "bottom-left");
+      });
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="header">Dviračių takų planai Vilniuje iki 2023 m.</h1>
+      <div id="viewDiv"></div>
+      <div id="legendDiv"></div>
+    </div>
+  </body>
+</html>
